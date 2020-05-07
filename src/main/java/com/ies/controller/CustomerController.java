@@ -51,4 +51,9 @@ public class CustomerController {
         return ResultObj.DELETE_SUCCESS;
     }
 
+    @RequestMapping("loadAllCustomerJson")
+    public Object loadAllCustomerJson() {
+        return customerService.loadAllCustomerJson();
+    }
+
 }

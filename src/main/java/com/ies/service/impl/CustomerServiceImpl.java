@@ -69,6 +69,18 @@ public class CustomerServiceImpl implements ICustomerService {
         customerMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public List<Customer> loadAllCustomerJson() {
+        CustomerCriteria customerCriteria = new CustomerCriteria();
+        customerCriteria.createCriteria();
+        return customerMapper.selectByExample(customerCriteria);
+    }
+
+    @Override
+    public Customer getCustomer(Long customerId) {
+        return customerMapper.selectByPrimaryKey(customerId);
+    }
+
     private boolean checkTheSameName(String username) {
         CustomerCriteria customerCriteria = new CustomerCriteria();
         customerCriteria.createCriteria().andUsernameEqualTo(username);

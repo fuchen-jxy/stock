@@ -324,7 +324,7 @@
     from breakage left join item on breakage.item_id = item.id
     where 1 = 1
     <if test="itemName != null">
-      AND item.name LIKE CONCAT("%" + ${itemName} + "%")
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
     </if>
     ORDER BY breakage.id desc
   </select>

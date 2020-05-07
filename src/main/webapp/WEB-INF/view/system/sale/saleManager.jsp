@@ -28,7 +28,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">商品名称:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="username" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="itemName" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入商品名称" style="height: 30px;border-radius: 10px">
             </div>
             <button type="button"
@@ -48,10 +48,10 @@
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div id="userToolBar" style="display: none;">
     <button type="button" class="layui-btn layui-btn-sm layui-btn-radius" lay-event="add">增加</button>
-    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="deleteBatch">批量删除</button>
+    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="deleteBatch">批量销退</button>
 </div>
 <div id="userBar" style="display: none;">
-    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">销退</a>
 </div>
 
 <!-- 添加和修改的弹出层-->
@@ -90,6 +90,14 @@
                 <label class="layui-form-label">数量:</label>
                 <div class="layui-input-inline">
                     <input type="text" name="count" lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="remark" lay-verify="required" placeholder="请输入备注" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -144,6 +152,7 @@
                 , {field: 'customerName', title: '客户名称', align: 'center'}
                 , {field: 'price', title: '销售价', align: 'center'}
                 , {field: 'count', title: '数量', align: 'center'}
+                , {field: 'remark', title: '备注', align: 'center'}
                 , {field: 'type', title: '类型', align: 'center', templet: function (d) {
                         return d.type == '1' ? '<font color=blue>销售</font>' : '<font color=red>销退</font>';
                     }}
@@ -190,7 +199,7 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                layer.confirm('真的删除这个销售销退单么？', function (index) {
+                layer.confirm('真的销退这个销售单么？', function (index) {
                     //向服务端发送删除指令
                     $.post("${pageContext.request.contextPath}/sale/deleteSale.action", {id: data.id}, function (res) {
                         layer.msg(res.msg);
@@ -286,7 +295,7 @@
                     params+="&ids="+item.id;
                 }
             });
-            layer.confirm('真的要删除这些销售销退么？', function (index) {
+            layer.confirm('真的要销退这些销售么？', function (index) {
                 //向服务端发送删除指令
                 $.post("${pageContext.request.contextPath}/sale/deleteBatchSale.action",params, function (res) {
                     layer.msg(res.msg);

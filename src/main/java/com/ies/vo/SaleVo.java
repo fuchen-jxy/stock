@@ -17,6 +17,10 @@ public class SaleVo extends Sale {
     private Integer limit;
     private Long [] ids;
 
+    private String itemName;
+    private String userName;
+    private String customerName;
+
     public Integer getPage() {
         return page;
     }
@@ -41,4 +45,27 @@ public class SaleVo extends Sale {
         this.ids = ids;
     }
 
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 }

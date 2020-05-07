@@ -364,4 +364,15 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="loadAllSale" resultMap="BaseResultMap">
+    select
+    sale.id, sale.item_id, sale.customer_id, sale.price, sale.count, sale.user_id, sale.created, sale.type, sale.remark
+    from sale left join item on sale.item_id = item.id
+    where 1 = 1
+    <if test="itemName != null">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+    ORDER BY sale.id desc
+  </select>
 </mapper>

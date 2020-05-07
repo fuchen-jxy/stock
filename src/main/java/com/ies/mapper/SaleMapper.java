@@ -3,6 +3,8 @@ package com.ies.mapper;
 import com.ies.domain.Sale;
 import com.ies.domain.SaleCriteria;
 import java.util.List;
+
+import com.ies.vo.SaleVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -102,4 +104,6 @@ public interface SaleMapper {
      * @mbggenerated Thu May 07 01:59:54 CST 2020
      */
     int updateByPrimaryKey(Sale record);
+
+    List<Sale> loadAllSale(SaleVo saleVo);
 }
