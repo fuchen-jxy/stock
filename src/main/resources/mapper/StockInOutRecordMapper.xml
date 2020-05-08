@@ -349,4 +349,16 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="loadAllStockInOutRecord" resultMap="BaseResultMap">
+    SELECT
+    record.id, record.item_id, record.type, record.count, record.rel_id, record.created, record.user_id, record.remain
+    FROM stock_in_out_record record left join item on record.item_id = item.id
+    where 1 = 1
+    <if test="itemName != null">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+    ORDER BY record.id desc
+  </select>
+
 </mapper>

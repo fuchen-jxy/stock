@@ -1,8 +1,12 @@
 package com.ies.mapper;
 
+import com.ies.domain.Stock;
 import com.ies.domain.StockInOutRecord;
 import com.ies.domain.StockInOutRecordCriteria;
 import java.util.List;
+
+import com.ies.vo.StockInOutRecordVo;
+import com.ies.vo.StockVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -102,4 +106,6 @@ public interface StockInOutRecordMapper {
      * @mbggenerated Wed May 06 21:23:23 CST 2020
      */
     int updateByPrimaryKey(StockInOutRecord record);
+
+    List<StockInOutRecord> loadAllStockInOutRecord(StockInOutRecordVo stockInOutRecordVo);
 }

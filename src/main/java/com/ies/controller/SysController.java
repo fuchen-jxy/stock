@@ -109,4 +109,22 @@ public class SysController {
         return "system/sale/saleManager";
     }
 
+    /**
+     * 库存出入库
+     * @return
+     */
+    @RequestMapping("toStockInOutManager")
+    public String toStockInOutManager() {
+        return "system/stock/stockInOutManager";
+    }
+
+    /**
+     * 商品库龄
+     * @return
+     */
+    @RequestMapping("toItemYearManager")
+    public String toItemYearManager() {
+        return "system/stock/itemYearManager";
+    }
+
 }

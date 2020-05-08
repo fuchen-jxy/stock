@@ -3,6 +3,8 @@ package com.ies.mapper;
 import com.ies.domain.Stock;
 import com.ies.domain.StockCriteria;
 import java.util.List;
+
+import com.ies.vo.StockVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -102,4 +104,6 @@ public interface StockMapper {
      * @mbggenerated Wed May 06 21:23:49 CST 2020
      */
     int updateByPrimaryKey(Stock record);
+
+    List<Stock> loadAllItemYear(StockVo stockVo);
 }

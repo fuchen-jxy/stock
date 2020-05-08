@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>销售销退管理</title>
+    <title>库存出入库管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -46,71 +46,40 @@
 
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
-<div id="userToolBar" style="display: none;">
-    <button type="button" class="layui-btn layui-btn-sm layui-btn-radius" lay-event="add">增加</button>
-    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="deleteBatch">批量销退</button>
-</div>
-<div id="userBar" style="display: none;">
-    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">销退</a>
-</div>
 
 <!-- 添加和修改的弹出层-->
 <div style="display: none;padding: 20px" id="saveOrUpdateDiv">
     <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">商品:</label>
+                <label class="layui-form-label">供应商名:</label>
                 <div class="layui-input-inline">
                     <input type="hidden" name="id">
-                    <select name="itemId" id="searchsupplier" lay-filter="searchsupplier">
-                    </select>
+                    <input type="text" name="username" lay-verify="required" placeholder="请输入供应商姓名" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">客户:</label>
+                <label class="layui-form-label">手机号码:</label>
                 <div class="layui-input-inline">
-                    <input type="hidden" name="id">
-                    <select name="customerId" id="searchsupplier2" lay-filter="searchsupplier2">
-                    </select>
+                    <input type="tel" name="phone" lay-verify="required" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">价格:</label>
+                <label class="layui-form-label">地址:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="price" lay-verify="required" placeholder="请输入价格" autocomplete="off" class="layui-input">
+                    <input type="text" name="address" lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">数量:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="count" lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">备注:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="remark"  placeholder="请输入备注" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">类型:</label>
-                <div class="layui-input-inline">
-                    <select name="type" id="opType" >
-                        <option >请选择</option>
-                        <option value="1" >销售</option>
-                        <option value="2" >销退</option>
-                    </select>
-                </div>
+            <label class="layui-form-label">状态:</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="status" value="1" checked="checked" title="合作">
+                <input type="radio" name="status" value="2" title="停止合作">
             </div>
         </div>
 
@@ -139,8 +108,8 @@
         //渲染数据表格
         tableIns = table.render({
             elem: '#userTable'   //渲染的目标对象
-            , url: '${pageContext.request.contextPath}/sale/loadAllSale.action' //数据接口
-            , title: '销售数据表'//数据导出来的标题
+            , url: '${pageContext.request.contextPath}/stock/loadAllStockInOutRecord.action' //数据接口
+            , title: '出入库数据表'//数据导出来的标题
             , toolbar: "#userToolBar"   //表格的工具条
             , height: '600'
             , cellMinWidth: 100 //设置列的最小默认宽度
@@ -149,16 +118,14 @@
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'id', title: 'ID', align: 'center'}
                 , {field: 'itemName', title: '商品名称', align: 'center'}
-                , {field: 'customerName', title: '客户名称', align: 'center'}
-                , {field: 'price', title: '销售价', align: 'center'}
-                , {field: 'count', title: '数量', align: 'center'}
-                , {field: 'remark', title: '备注', align: 'center'}
                 , {field: 'type', title: '类型', align: 'center', templet: function (d) {
-                        return d.type == '1' ? '<font color=blue>销售</font>' : '<font color=red>销退</font>';
+                        return d.type == 1 ? '<font color=blue>出库</font>' : '<font color=red>入库</font>';
                     }}
+                , {field: 'count', title: '数量', align: 'center'}
+                , {field: 'relId', title: '关联ID', align: 'center'}
                 , {field: 'userName', title: '操作人', align: 'center'}
+                , {field: 'remain', title: '剩余数量', align: 'center'}
                 , {field: 'created', title: '操作时间', align: 'center', templet: "<div>{{layui.util.toDateString(d.created, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"}
-                , {title: '操作', toolbar: '#userBar', align: 'center', width: '20%'}
             ]],
             done:function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -177,7 +144,7 @@
             var params = $("#searchFrm").serialize();
             //alert(params);
             tableIns.reload({
-                url: "${pageContext.request.contextPath}/sale/loadAllSale.action?" + params,
+                url: "${pageContext.request.contextPath}/stock/loadAllStockInOutRecord.action?" + params,
                 page:{curr:1}
             })
         });
@@ -199,9 +166,9 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                layer.confirm('真的销退这个销售单么？', function (index) {
+                layer.confirm('真的删除【' + data.username + '】这个供应商么？', function (index) {
                     //向服务端发送删除指令
-                    $.post("${pageContext.request.contextPath}/sale/deleteSale.action", {id: data.id}, function (res) {
+                    $.post("${pageContext.request.contextPath}/supplier/deleteSupplier.action", {id: data.id}, function (res) {
                         layer.msg(res.msg);
                         //刷新数据表格
                         tableIns.reload();
@@ -220,36 +187,14 @@
         function openAddUser() {
             mainIndex = layer.open({
                 type: 1,
-                title: '添加销售销退单',
+                title: '添加供应商',
                 content: $("#saveOrUpdateDiv"),
                 area: ['700px', '500px'],
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    $.get("${pageContext.request.contextPath}/item/loadAllItemJson.action",function(res){
-                        var users=res;
-                        var dom_mgr=$("#searchsupplier");
-                        var html="<option value='0'>请选择</option>";
-                        $.each(users,function(index,item){
-                            html+="<option value='"+item.id+"'>"+item.name+"</option>";
-                        });
-                        dom_mgr.html(html);
-                        //重新渲染
-                        form.render("select");
-                    });
-
-                    $.get("${pageContext.request.contextPath}/customer/loadAllCustomerJson.action",function(res){
-                        var users=res;
-                        var dom_mgr=$("#searchsupplier2");
-                        var html="<option value='0'>请选择</option>";
-                        $.each(users,function(index,item){
-                            html+="<option value='"+item.id+"'>"+item.username+"</option>";
-                        });
-                        dom_mgr.html(html);
-                        //重新渲染
-                        form.render("select");
-                    });
-                    url = "${pageContext.request.contextPath}/sale/addSale.action";
+                    $("#password").removeAttr("readonly");
+                    url = "${pageContext.request.contextPath}/supplier/addSupplier.action";
                 }
             });
         }
@@ -257,13 +202,13 @@
         function openUpdateUser(data) {
             mainIndex = layer.open({
                 type: 1,
-                title: '修改销售销退单',
+                title: '修改供应商',
                 content: $("#saveOrUpdateDiv"),
                 area: ['700px', '500px'],
                 success: function (index) {
                     form.val("dataFrm", data);
                     form.render();
-                    url = "${pageContext.request.contextPath}/sale/updateSale.action";
+                    url = "${pageContext.request.contextPath}/supplier/updateSupplier.action";
                 }
             });
         }
@@ -295,9 +240,9 @@
                     params+="&ids="+item.id;
                 }
             });
-            layer.confirm('真的要销退这些销售么？', function (index) {
+            layer.confirm('真的要删除这些供应商么？', function (index) {
                 //向服务端发送删除指令
-                $.post("${pageContext.request.contextPath}/sale/deleteBatchSale.action",params, function (res) {
+                $.post("${pageContext.request.contextPath}/supplier/deleteBatchSupplier.action",params, function (res) {
                     layer.msg(res.msg);
                     //刷新数据表格
                     tableIns.reload();

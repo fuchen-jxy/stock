@@ -11,8 +11,10 @@ import com.ies.utils.DataGridView;
 import com.ies.utils.WebUtils;
 import com.ies.vo.SaleVo;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -122,7 +124,7 @@ public class SaleServiceImpl implements ISaleService {
     @Transactional
     public void deleteSale(Long id) {
         Sale sale = saleMapper.selectByPrimaryKey(id);
-        if (SysConstast.CODE_TWO.equals(sale.getType())) {
+        if (!StringUtils.isEmpty(sale.getRemark()) && sale.getRemark().contains("销退")) {
             throw new IllegalArgumentException("已经销退了");
         }
         int count = sale.getCount();
@@ -164,8 +166,12 @@ public class SaleServiceImpl implements ISaleService {
         income.setRelId(sale.getId());
         incomeMapper.insert(income);
 
-        sale.setType(SysConstast.CODE_TWO);
+        sale.setRemark("销退");
         saleMapper.updateByPrimaryKey(sale);
+        Sale newSale = new Sale();
+        BeanUtils.copyProperties(sale, newSale);
+        newSale.setType(SysConstast.CODE_TWO);
+        saleMapper.insert(newSale);
     }
 
 }

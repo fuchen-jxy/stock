@@ -317,4 +317,22 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="loadAllItemYear" resultMap="BaseResultMap">
+    SELECT
+    stock.id, stock.item_id, stock.status, stock.created, stock.rel_id, stock.indexs
+    FROM stock stock left join item on stock.item_id = item.id
+    where stock.status = 0
+    <if test="itemName != null">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+    <if test="dayS != null">
+      AND DATE_ADD(stock.created, INTERVAL #{dayS} DAY) &lt;= now()
+    </if>
+    <if test="dayE != null">
+      AND DATE_ADD(stock.created, INTERVAL #{dayE} DAY) >= now()
+    </if>
+    ORDER BY stock.id desc
+  </select>
+
 </mapper>
