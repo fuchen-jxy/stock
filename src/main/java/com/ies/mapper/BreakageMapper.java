@@ -5,6 +5,7 @@ import com.ies.domain.BreakageCriteria;
 import java.util.List;
 
 import com.ies.vo.BreakageVo;
+import com.ies.vo.statistics.BreakageReportVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -106,4 +107,6 @@ public interface BreakageMapper {
     int updateByPrimaryKey(Breakage record);
 
     List<Breakage> loadAllBreakage(BreakageVo breakageVo);
+
+    List<BreakageReportVo> breakageReport(BreakageReportVo breakageReportVo);
 }

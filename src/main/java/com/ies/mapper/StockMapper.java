@@ -5,6 +5,7 @@ import com.ies.domain.StockCriteria;
 import java.util.List;
 
 import com.ies.vo.StockVo;
+import com.ies.vo.statistics.StockReportVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -106,4 +107,6 @@ public interface StockMapper {
     int updateByPrimaryKey(Stock record);
 
     List<Stock> loadAllItemYear(StockVo stockVo);
+
+    List<StockReportVo> stockReport(StockReportVo stockReportVo);
 }

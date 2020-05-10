@@ -127,4 +127,49 @@ public class SysController {
         return "system/stock/itemYearManager";
     }
 
+    /**
+     * 采购采退统计
+     * @return
+     */
+    @RequestMapping("toCaigouReportManager")
+    public String toCaigouReportManager() {
+        return "system/statistics/caigouReportManager";
+    }
+
+    /**
+     * 报损统计
+     * @return
+     */
+    @RequestMapping("toBreakageReportManager")
+    public String toBreakageReportManager() {
+        return "system/statistics/breakageReportManager";
+    }
+
+    /**
+     * 销售统计
+     * @return
+     */
+    @RequestMapping("toSaleReportManager")
+    public String toSaleReportManager() {
+        return "system/statistics/saleReportManager";
+    }
+
+    /**
+     * 库存统计
+     * @return
+     */
+    @RequestMapping("toStockReportManager")
+    public String toStockReportManager() {
+        return "system/statistics/stockReportManager";
+    }
+
+    /**
+     * 利润统计
+     * @return
+     */
+    @RequestMapping("toIncomeReportManager")
+    public String toIncomeReportManager() {
+        return "system/statistics/incomeManager";
+    }
+
 }

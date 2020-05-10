@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>采购采退管理</title>
+    <title>销售销退统计</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -28,8 +28,25 @@
         <div class="layui-inline">
             <label class="layui-form-label">商品名称:</label>
             <div class="layui-input-inline" style="padding: 5px">
-                <input type="text" name="username" autocomplete="off" class="layui-input layui-input-inline"
+                <input type="text" name="itemName" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入商品名称" style="height: 30px;border-radius: 10px">
+            </div>
+            <label class="layui-form-label">开始时间:</label>
+            <div class="layui-input-inline" style="padding: 5px">
+                <input type="date" name="dateS" autocomplete="off" class="layui-input layui-input-inline"
+                       placeholder="请输入开始时间" style="height: 30px;border-radius: 10px">
+            </div>
+            <label class="layui-form-label">时间结束:</label>
+            <div class="layui-input-inline" style="padding: 5px">
+                <input type="date" name="dateE" autocomplete="off" class="layui-input layui-input-inline"
+                       placeholder="请输入时间结束" style="height: 30px;border-radius: 10px">
+            </div>
+            <label class="layui-form-label">类型:</label>
+            <div class="layui-input-inline">
+                <select name="type" id="opType" >
+                    <option value="1" checked >销售</option>
+                    <option value="2" >销退</option>
+                </select>
             </div>
             <button type="button"
                     class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
@@ -46,69 +63,7 @@
 
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
-<div id="userToolBar" style="display: none;">
-    <button type="button" class="layui-btn layui-btn-sm layui-btn-radius" lay-event="add">增加</button>
-    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm layui-btn-radius" lay-event="deleteBatch">批量删除</button>
-</div>
-<div id="userBar" style="display: none;">
-    <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-radius" lay-event="del">删除</a>
-</div>
 
-<!-- 添加和修改的弹出层-->
-<div style="display: none;padding: 20px" id="saveOrUpdateDiv">
-    <form class="layui-form" lay-filter="dataFrm" id="dataFrm">
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">商品:</label>
-                <div class="layui-input-inline">
-                    <input type="hidden" name="id">
-                    <select name="itemId" id="searchsupplier" lay-filter="searchsupplier">
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">价格:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="price" lay-verify="required" placeholder="请输入价格" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">数量:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="count" lay-verify="required" placeholder="请输入数量" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">类型:</label>
-                <div class="layui-input-inline">
-                    <select name="type" id="opType" >
-                        <option >请选择</option>
-                        <option value="1" >采购</option>
-                        <option value="2" >采退</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <div class="layui-input-block" style="text-align: center;padding-right: 120px">
-                <button type="button"
-                        class="layui-btn layui-btn-normal layui-btn-md layui-icon layui-icon-release layui-btn-radius"
-                        lay-filter="doSubmit" lay-submit="">提交
-                </button>
-                <button type="reset"
-                        class="layui-btn layui-btn-warm layui-btn-md layui-icon layui-icon-refresh layui-btn-radius">重置
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
 
 <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 <script type="text/javascript">
@@ -121,23 +76,22 @@
         //渲染数据表格
         tableIns = table.render({
             elem: '#userTable'   //渲染的目标对象
-            , url: '${pageContext.request.contextPath}/caigou/loadAllCaigou.action' //数据接口
-            , title: '采购数据表'//数据导出来的标题
+            , url: '${pageContext.request.contextPath}/statistics/saleReport.action' //数据接口
+            , title: '采购采退统计数据表'//数据导出来的标题
             , toolbar: "#userToolBar"   //表格的工具条
             , height: '600'
             , cellMinWidth: 100 //设置列的最小默认宽度
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 {type: 'checkbox', fixed: 'left'}
+                , {field: 'id', title: 'ID', align: 'center'}
+                , {field: 'month', title: '日期', align: 'center'}
                 , {field: 'itemName', title: '商品名称', align: 'center'}
-                , {field: 'price', title: '成本价', align: 'center'}
                 , {field: 'count', title: '数量', align: 'center'}
+                , {field: 'price', title: '总价', align: 'center'}
                 , {field: 'type', title: '类型', align: 'center', templet: function (d) {
-                        return d.type == '1' ? '<font color=blue>采购</font>' : '<font color=red>采退</font>';
+                        return d.type == '1' ? '<font color=blue>销售</font>' : '<font color=red>销退</font>';
                     }}
-                , {field: 'userName', title: '操作人', align: 'center'}
-                , {field: 'created', title: '操作时间', align: 'center', templet: "<div>{{layui.util.toDateString(d.created, 'yyyy年MM月dd日 HH:mm:ss')}}</div>"}
-                , {title: '操作', toolbar: '#userBar', align: 'center', width: '20%'}
             ]],
             done:function (data, curr, count) {
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
@@ -156,7 +110,7 @@
             var params = $("#searchFrm").serialize();
             //alert(params);
             tableIns.reload({
-                url: "${pageContext.request.contextPath}/caigou/loadAllCaigou.action?" + params,
+                url: "${pageContext.request.contextPath}/statistics/saleReport.action?" + params,
                 page:{curr:1}
             })
         });
@@ -178,9 +132,9 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'del') { //删除
-                layer.confirm('真的删除【' + data.username + '】这个采购采退单么？', function (index) {
+                layer.confirm('真的删除【' + data.username + '】这个供应商么？', function (index) {
                     //向服务端发送删除指令
-                    $.post("${pageContext.request.contextPath}/caigou/deleteCaigou.action", {id: data.id}, function (res) {
+                    $.post("${pageContext.request.contextPath}/supplier/deleteSupplier.action", {id: data.id}, function (res) {
                         layer.msg(res.msg);
                         //刷新数据表格
                         tableIns.reload();
@@ -199,24 +153,14 @@
         function openAddUser() {
             mainIndex = layer.open({
                 type: 1,
-                title: '添加采购采退单',
+                title: '添加供应商',
                 content: $("#saveOrUpdateDiv"),
                 area: ['700px', '500px'],
                 success: function (index) {
                     //清空表单数据
                     $("#dataFrm")[0].reset();
-                    $.get("${pageContext.request.contextPath}/item/loadAllItemJson.action",function(res){
-                        var users=res;
-                        var dom_mgr=$("#searchsupplier");
-                        var html="<option value='0'>请选择</option>";
-                        $.each(users,function(index,item){
-                            html+="<option value='"+item.id+"'>"+item.name+"</option>";
-                        });
-                        dom_mgr.html(html);
-                        //重新渲染
-                        form.render("select");
-                    });
-                    url = "${pageContext.request.contextPath}/caigou/addCaigou.action";
+                    $("#password").removeAttr("readonly");
+                    url = "${pageContext.request.contextPath}/supplier/addSupplier.action";
                 }
             });
         }
@@ -224,13 +168,13 @@
         function openUpdateUser(data) {
             mainIndex = layer.open({
                 type: 1,
-                title: '修改采购采退单',
+                title: '修改供应商',
                 content: $("#saveOrUpdateDiv"),
                 area: ['700px', '500px'],
                 success: function (index) {
                     form.val("dataFrm", data);
                     form.render();
-                    url = "${pageContext.request.contextPath}/caigou/updateCaigou.action";
+                    url = "${pageContext.request.contextPath}/supplier/updateSupplier.action";
                 }
             });
         }
@@ -262,9 +206,9 @@
                     params+="&ids="+item.id;
                 }
             });
-            layer.confirm('真的要删除这些采购采退单么？', function (index) {
+            layer.confirm('真的要删除这些供应商么？', function (index) {
                 //向服务端发送删除指令
-                $.post("${pageContext.request.contextPath}/caigou/deleteBatchCaigou.action",params, function (res) {
+                $.post("${pageContext.request.contextPath}/supplier/deleteBatchSupplier.action",params, function (res) {
                     layer.msg(res.msg);
                     //刷新数据表格
                     tableIns.reload();

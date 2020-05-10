@@ -5,6 +5,7 @@ import com.ies.domain.SaleCriteria;
 import java.util.List;
 
 import com.ies.vo.SaleVo;
+import com.ies.vo.statistics.SaleReportVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -106,4 +107,6 @@ public interface SaleMapper {
     int updateByPrimaryKey(Sale record);
 
     List<Sale> loadAllSale(SaleVo saleVo);
+
+    List<SaleReportVo> saleReport(SaleReportVo saleReportVo);
 }

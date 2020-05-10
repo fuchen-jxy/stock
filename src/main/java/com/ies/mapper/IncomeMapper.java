@@ -3,6 +3,9 @@ package com.ies.mapper;
 import com.ies.domain.Income;
 import com.ies.domain.IncomeCriteria;
 import java.util.List;
+
+import com.ies.vo.statistics.IncomeReportVo;
+import com.ies.vo.statistics.StockReportVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -102,4 +105,6 @@ public interface IncomeMapper {
      * @mbggenerated Sat May 02 11:25:47 CST 2020
      */
     int updateByPrimaryKey(Income record);
+
+    List<IncomeReportVo> incomeReport(IncomeReportVo incomeReportVo);
 }

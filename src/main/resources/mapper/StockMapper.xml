@@ -335,4 +335,8 @@
     ORDER BY stock.id desc
   </select>
 
+  <select id="stockReport" resultType="com.ies.vo.statistics.StockReportVo">
+
+  </select>
+
 </mapper>

@@ -345,4 +345,21 @@
     </if>
     ORDER BY caigou.id desc
   </select>
+
+  <select id="caigouReport" resultType="com.ies.vo.statistics.CaigouReportVo">
+    select DATE_FORMAT(caigou.created, '%Y-%m-%d') as month, caigou.type as type, sum(caigou.count) as count, sum(caigou.price) as price, item.name as itemName from caigou left join item on caigou.item_id = item.id
+    where type = #{type}
+    <if test="dateS != null and dateS != ''">
+      AND caigou.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND caigou.created &lt;= #{dateE}
+    </if>
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+    group by DATE_FORMAT(caigou.created, '%Y-%m-%d'), caigou.type
+    ORDER BY DATE_FORMAT(caigou.created, '%Y-%m-%d'), caigou.type
+  </select>
+
 </mapper>

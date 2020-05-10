@@ -5,6 +5,7 @@ import com.ies.domain.CaigouCriteria;
 import java.util.List;
 
 import com.ies.vo.CaigouVo;
+import com.ies.vo.statistics.CaigouReportVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
@@ -106,4 +107,6 @@ public interface CaigouMapper {
     int updateByPrimaryKey(Caigou record);
 
     List<Caigou> loadAllCaigou(CaigouVo caigouVo);
+
+    List<CaigouReportVo> caigouReport(CaigouReportVo caigouReportVo);
 }

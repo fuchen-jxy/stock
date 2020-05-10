@@ -375,4 +375,21 @@
     </if>
     ORDER BY sale.id desc
   </select>
+
+  <select id="saleReport" resultType="com.ies.vo.statistics.SaleReportVo">
+    select DATE_FORMAT(sale.created, '%Y-%m-%d') as month, sale.type as type, sum(sale.count) as count, sum(sale.price) as price, item.name as itemName
+    from sale left join item on sale.item_id = item.id
+    where type = #{type}
+    <if test="dateS != null and dateS != ''">
+      AND sale.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND sale.created &lt;= #{dateE}
+    </if>
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+    group by DATE_FORMAT(sale.created, '%Y-%m-%d'), sale.type
+    ORDER BY DATE_FORMAT(sale.created, '%Y-%m-%d'), sale.type
+  </select>
 </mapper>

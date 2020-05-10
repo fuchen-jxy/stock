@@ -364,4 +364,20 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="incomeReport" resultType="com.ies.vo.statistics.IncomeReportVo">
+    SELECT
+    DATE_FORMAT(income.created, '%Y-%m-%d') AS month,
+    SUM(income.money_in - income.money_out) AS price
+    FROM income WHERE 1 = 1
+    <if test="dateS != null and dateS != ''">
+      AND income.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND income.created &lt;= #{dateE}
+    </if>
+    group by DATE_FORMAT(income.created, '%Y-%m-%d')
+    ORDER BY DATE_FORMAT(income.created, '%Y-%m-%d')
+  </select>
+
 </mapper>
