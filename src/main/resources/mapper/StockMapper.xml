@@ -336,7 +336,20 @@
   </select>
 
   <select id="stockReport" resultType="com.ies.vo.statistics.StockReportVo">
-
+    select
+    DATE_FORMAT(stock.created, '%Y-%m-%d') as month, item.name as itemName, count(*) as count
+    from stock left join item on stock.item_id = item.id
+    where stock.status = 0
+    <if test="dateS != null and dateS != ''">
+      AND stock.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND stock.created &lt;= #{dateE}
+    </if>
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+    group by DATE_FORMAT(stock.created, '%Y-%m-%d')
   </select>
 
 </mapper>
