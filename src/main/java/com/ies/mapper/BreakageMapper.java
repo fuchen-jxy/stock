@@ -2,6 +2,8 @@ package com.ies.mapper;
 
 import com.ies.domain.Breakage;
 import com.ies.domain.BreakageCriteria;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ies.vo.BreakageVo;
@@ -109,4 +111,6 @@ public interface BreakageMapper {
     List<Breakage> loadAllBreakage(BreakageVo breakageVo);
 
     List<BreakageReportVo> breakageReport(BreakageReportVo breakageReportVo);
+
+    BigDecimal breakageTotalPriceReport(BreakageReportVo breakageReportVo);
 }

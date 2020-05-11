@@ -2,6 +2,8 @@ package com.ies.mapper;
 
 import com.ies.domain.Caigou;
 import com.ies.domain.CaigouCriteria;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ies.vo.CaigouVo;
@@ -109,4 +111,6 @@ public interface CaigouMapper {
     List<Caigou> loadAllCaigou(CaigouVo caigouVo);
 
     List<CaigouReportVo> caigouReport(CaigouReportVo caigouReportVo);
+
+    BigDecimal caigouTotalPriceReport(CaigouReportVo caigouReportVo);
 }

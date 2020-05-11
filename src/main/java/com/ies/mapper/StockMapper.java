@@ -2,6 +2,8 @@ package com.ies.mapper;
 
 import com.ies.domain.Stock;
 import com.ies.domain.StockCriteria;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ies.vo.StockVo;
@@ -109,4 +111,6 @@ public interface StockMapper {
     List<Stock> loadAllItemYear(StockVo stockVo);
 
     List<StockReportVo> stockReport(StockReportVo stockReportVo);
+
+    BigDecimal stockTotalPriceReport(StockReportVo stockReportVo);
 }

@@ -2,6 +2,8 @@ package com.ies.mapper;
 
 import com.ies.domain.Sale;
 import com.ies.domain.SaleCriteria;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ies.vo.SaleVo;
@@ -109,4 +111,6 @@ public interface SaleMapper {
     List<Sale> loadAllSale(SaleVo saleVo);
 
     List<SaleReportVo> saleReport(SaleReportVo saleReportVo);
+
+    BigDecimal saleTotalPriceReport(SaleReportVo saleReportVo);
 }

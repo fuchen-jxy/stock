@@ -118,4 +118,25 @@ public class StatisticsServiceImpl implements IStatisticsService {
         List<IncomeReportVo> incomeReportVos = incomeMapper.incomeReport(incomeReportVo);
         return new DataGridView(page.getTotal(), incomeReportVos);
     }
+
+    @Override
+    public BigDecimal breakageTotalPriceReport(BreakageReportVo breakageReportVo) {
+        return breakageMapper.breakageTotalPriceReport(breakageReportVo);
+    }
+
+    @Override
+    public BigDecimal caigouTotalPriceReport(CaigouReportVo caigouReportVo) {
+        return caigouMapper.caigouTotalPriceReport(caigouReportVo);
+    }
+
+    @Override
+    public BigDecimal incomeTotalPriceReport(IncomeReportVo incomeReportVo) {
+        return incomeMapper.incomeTotalPriceReport(incomeReportVo);
+    }
+
+    @Override
+    public BigDecimal saleTotalPriceReport(SaleReportVo saleReportVo) {
+        return saleMapper.saleTotalPriceReport(saleReportVo);
+    }
+
 }

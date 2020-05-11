@@ -344,4 +344,19 @@
     group by DATE_FORMAT(breakage.created, '%Y-%m-%d')
     ORDER BY DATE_FORMAT(breakage.created, '%Y-%m-%d')
   </select>
+
+  <select id="breakageTotalPriceReport" resultType="java.math.BigDecimal">
+    SELECT
+    sum(breakage.price) as price
+    from breakage left join item on breakage.item_id = item.id
+    <if test="dateS != null and dateS != ''">
+      AND breakage.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND breakage.created &lt;= #{dateE}
+    </if>
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+  </select>
 </mapper>

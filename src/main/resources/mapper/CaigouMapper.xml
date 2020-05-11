@@ -358,8 +358,24 @@
     <if test="itemName != null and itemName != ''">
       AND item.name LIKE CONCAT('%', #{itemName}, '%')
     </if>
-    group by DATE_FORMAT(caigou.created, '%Y-%m-%d'), caigou.type
-    ORDER BY DATE_FORMAT(caigou.created, '%Y-%m-%d'), caigou.type
+    group by DATE_FORMAT(caigou.created, '%Y-%m-%d'), item.name
+    ORDER BY DATE_FORMAT(caigou.created, '%Y-%m-%d'), item.name
+  </select>
+
+  <select id="caigouTotalPriceReport" resultType="java.math.BigDecimal">
+    SELECT
+    sum(caigou.price) as price
+    from caigou left join item on caigou.item_id = item.id
+    where type = #{type}
+    <if test="dateS != null and dateS != ''">
+      AND caigou.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND caigou.created &lt;= #{dateE}
+    </if>
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
   </select>
 
 </mapper>

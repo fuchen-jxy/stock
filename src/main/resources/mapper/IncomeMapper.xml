@@ -380,4 +380,16 @@
     ORDER BY DATE_FORMAT(income.created, '%Y-%m-%d')
   </select>
 
+  <select id="incomeTotalPriceReport" resultType="java.math.BigDecimal">
+    SELECT
+    SUM(income.money_in - income.money_out) AS price
+    FROM income WHERE 1 = 1
+    <if test="dateS != null and dateS != ''">
+      AND income.created >= #{dateS}
+    </if>
+    <if test="dateE != null and dateE != ''">
+      AND income.created &lt;= #{dateE}
+    </if>
+  </select>
+
 </mapper>

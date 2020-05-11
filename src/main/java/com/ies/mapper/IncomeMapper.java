@@ -2,6 +2,8 @@ package com.ies.mapper;
 
 import com.ies.domain.Income;
 import com.ies.domain.IncomeCriteria;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ies.vo.statistics.IncomeReportVo;
@@ -107,4 +109,6 @@ public interface IncomeMapper {
     int updateByPrimaryKey(Income record);
 
     List<IncomeReportVo> incomeReport(IncomeReportVo incomeReportVo);
+
+    BigDecimal incomeTotalPriceReport(IncomeReportVo incomeReportVo);
 }

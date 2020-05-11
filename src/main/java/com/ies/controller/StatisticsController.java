@@ -26,14 +26,29 @@ public class StatisticsController {
         return statisticsService.caigouReport(caigouReportVo);
     }
 
+    @RequestMapping("caigouTotalPriceReport")
+    public Object caigouTotalPriceReport(CaigouReportVo caigouReportVo) {
+        return statisticsService.caigouTotalPriceReport(caigouReportVo);
+    }
+
     @RequestMapping("breakageReport")
     public DataGridView breakageReport(BreakageReportVo breakageReportVo) {
         return statisticsService.breakageReport(breakageReportVo);
     }
 
+    @RequestMapping("breakageTotalPriceReport")
+    public Object breakageTotalPriceReport(BreakageReportVo breakageReportVo) {
+        return statisticsService.breakageTotalPriceReport(breakageReportVo);
+    }
+
     @RequestMapping("saleReport")
     public DataGridView saleReport(SaleReportVo saleReportVo) {
         return statisticsService.saleReport(saleReportVo);
+    }
+
+    @RequestMapping("saleTotalPriceReport")
+    public Object saleTotalPriceReport(SaleReportVo saleReportVo) {
+        return statisticsService.saleTotalPriceReport(saleReportVo);
     }
 
     @RequestMapping("stockReport")
@@ -44,6 +59,11 @@ public class StatisticsController {
     @RequestMapping("incomeReport")
     public DataGridView incomeReport(IncomeReportVo incomeReportVo) {
         return statisticsService.incomeReport(incomeReportVo);
+    }
+
+    @RequestMapping("incomeTotalPriceReport")
+    public Object incomeTotalPriceReport(IncomeReportVo incomeReportVo) {
+        return statisticsService.incomeTotalPriceReport(incomeReportVo);
     }
 
 }

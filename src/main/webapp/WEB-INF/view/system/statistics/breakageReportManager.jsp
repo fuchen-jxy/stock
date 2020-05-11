@@ -54,6 +54,10 @@
 
 </form>
 
+<div>
+    总金额: <label id="totalPrice"></label>
+</div>
+
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 
@@ -84,6 +88,10 @@
                 , {field: 'price', title: '总价', align: 'center'}
             ]],
             done:function (data, curr, count) {
+                var params = $("#searchFrm").serialize();
+                $.post("${pageContext.request.contextPath}/statistics/breakageTotalPriceReport.action?" + params, function (res) {
+                    $("#totalPrice").text(res);
+                })
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
                 if(data.data.length==0&&curr!=1){
                     tableIns.reload({
@@ -102,6 +110,9 @@
             tableIns.reload({
                 url: "${pageContext.request.contextPath}/statistics/breakageReport.action?" + params,
                 page:{curr:1}
+            })
+            $.post("${pageContext.request.contextPath}/statistics/breakageTotalPriceReport.action?" + params, function (res) {
+                $("#totalPrice").text(res);
             })
         });
 

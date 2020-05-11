@@ -29,14 +29,14 @@
             <div class="layui-inline">
                 <label class="layui-form-label">开始时间:</label>
                 <div class="layui-input-inline" style="padding: 5px">
-                    <input type="text" name="start" id="startTime" class="layui-input layui-input-inline"
+                    <input type="date" name="start" id="startTime" class="layui-input layui-input-inline"
                            placeholder="yyyy-MM-dd" style="height: 30px;border-radius: 10px">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">结束时间:</label>
                 <div class="layui-input-inline" style="padding: 5px">
-                    <input type="text" name="end" id="endTime"  class="layui-input layui-input-inline"
+                    <input type="date" name="end" id="endTime"  class="layui-input layui-input-inline"
                            placeholder="yyyy-MM-dd" style="height: 30px;border-radius: 10px">
                 </div>
             </div>
