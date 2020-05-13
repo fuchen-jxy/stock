@@ -31,6 +31,15 @@
                 <input type="text" name="itemName" autocomplete="off" class="layui-input layui-input-inline"
                        placeholder="请输入商品名称" style="height: 30px;border-radius: 10px">
             </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">类型:</label>
+                <div class="layui-input-inline">
+                    <select name="type"  >
+                        <option value="1" checked >销售</option>
+                        <option value="2" >销退</option>
+                    </select>
+                </div>
+            </div>
             <button type="button"
                     class="layui-btn layui-btn-normal layui-icon layui-icon-search layui-btn-radius layui-btn-sm"
                     id="doSearch" style="margin-top: 4px">查询
@@ -43,7 +52,9 @@
     </div>
 
 </form>
-
+<div>
+    总金额: <label id="totalPrice"></label>， 总数量: <label id="totalCount"></label>
+</div>
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div id="userToolBar" style="display: none;">
@@ -161,6 +172,11 @@
                 , {title: '操作', toolbar: '#userBar', align: 'center', width: '20%'}
             ]],
             done:function (data, curr, count) {
+                var params = $("#searchFrm").serialize();
+                $.post("${pageContext.request.contextPath}/sale/totalMoneyAndCount.action?" + params, function (res) {
+                    $("#totalPrice").text(res.money);
+                    $("#totalCount").text(res.count);
+                })
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
                 if(data.data.length==0&&curr!=1){
                     tableIns.reload({
@@ -175,6 +191,10 @@
         //模糊查询
         $("#doSearch").click(function () {
             var params = $("#searchFrm").serialize();
+            $.post("${pageContext.request.contextPath}/sale/totalMoneyAndCount.action?" + params, function (res) {
+                $("#totalPrice").text(res.money);
+                $("#totalCount").text(res.count);
+            })
             //alert(params);
             tableIns.reload({
                 url: "${pageContext.request.contextPath}/sale/loadAllSale.action?" + params,

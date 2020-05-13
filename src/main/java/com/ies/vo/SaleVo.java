@@ -20,6 +20,7 @@ public class SaleVo extends Sale {
     private String itemName;
     private String userName;
     private String customerName;
+    private Integer type;
 
     public Integer getPage() {
         return page;
@@ -67,5 +68,15 @@ public class SaleVo extends Sale {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    @Override
+    public Integer getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

@@ -113,4 +113,8 @@ public interface SaleMapper {
     List<SaleReportVo> saleReport(SaleReportVo saleReportVo);
 
     BigDecimal saleTotalPriceReport(SaleReportVo saleReportVo);
+
+    BigDecimal totalMoney(SaleVo saleVo);
+
+    Integer totalCount(SaleVo saleVo);
 }

@@ -3,6 +3,8 @@ package com.ies.service;
 import com.ies.utils.DataGridView;
 import com.ies.vo.SaleVo;
 
+import java.util.Map;
+
 public interface ISaleService {
     DataGridView loadAllSale(SaleVo saleVo);
 
@@ -13,4 +15,6 @@ public interface ISaleService {
     void deleteBatchSale(Long[] ids);
 
     void deleteSale(Long id);
+
+    Map<String, Object> totalMoneyAndCount(SaleVo saleVo);
 }

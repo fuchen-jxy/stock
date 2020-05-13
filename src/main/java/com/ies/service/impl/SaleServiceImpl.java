@@ -19,7 +19,9 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: stock
@@ -43,6 +45,9 @@ public class SaleServiceImpl implements ISaleService {
 
     @Override
     public DataGridView loadAllSale(SaleVo saleVo) {
+        if (saleVo.getType() == null) {
+            saleVo.setType(1);
+        }
         Page<Object> page = PageHelper.startPage(saleVo.getPage(), saleVo.getLimit());
         List<Sale> saleList = saleMapper.loadAllSale(saleVo);
         return new DataGridView(page.getTotal(), saleList);
@@ -172,6 +177,19 @@ public class SaleServiceImpl implements ISaleService {
         BeanUtils.copyProperties(sale, newSale);
         newSale.setType(SysConstast.CODE_TWO);
         saleMapper.insert(newSale);
+    }
+
+    @Override
+    public Map<String, Object> totalMoneyAndCount(SaleVo saleVo) {
+        if (saleVo.getType() == null) {
+            saleVo.setType(1);
+        }
+        BigDecimal money = saleMapper.totalMoney(saleVo);
+        Integer count = saleMapper.totalCount(saleVo);
+        Map<String, Object> map = new HashMap<>();
+        map.put("money", money);
+        map.put("count", count);
+        return map;
     }
 
 }

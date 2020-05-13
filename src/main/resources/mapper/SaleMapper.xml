@@ -369,7 +369,7 @@
     select
     sale.id, sale.item_id, sale.customer_id, sale.price, sale.count, sale.user_id, sale.created, sale.type, sale.remark
     from sale left join item on sale.item_id = item.id
-    where 1 = 1
+    where sale.type = #{type}
     <if test="itemName != null">
       AND item.name LIKE CONCAT('%', #{itemName}, '%')
     </if>
@@ -403,6 +403,24 @@
     <if test="dateE != null and dateE != ''">
       AND sale.created &lt;= #{dateE}
     </if>
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+  </select>
+
+  <select id="totalMoney" resultType="java.math.BigDecimal">
+    select sum(sale.price) as price
+    from sale left join item on sale.item_id = item.id
+    where type = #{type}
+    <if test="itemName != null and itemName != ''">
+      AND item.name LIKE CONCAT('%', #{itemName}, '%')
+    </if>
+  </select>
+
+  <select id="totalCount" resultType="java.lang.Integer">
+    SELECT sum(sale.count) as count
+    from sale left join item on sale.item_id = item.id
+    where type = #{type}
     <if test="itemName != null and itemName != ''">
       AND item.name LIKE CONCAT('%', #{itemName}, '%')
     </if>
