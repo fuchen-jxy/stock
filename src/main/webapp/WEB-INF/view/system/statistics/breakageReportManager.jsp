@@ -81,7 +81,6 @@
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'id', title: 'ID', align: 'center'}
                 , {field: 'month', title: '日期', align: 'center'}
                 , {field: 'itemName', title: '商品名称', align: 'center'}
                 , {field: 'count', title: '数量', align: 'center'}

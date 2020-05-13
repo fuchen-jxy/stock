@@ -74,7 +74,6 @@
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 {type: 'checkbox', fixed: 'left'}
-                , {field: 'id', title: 'ID', align: 'center'}
                 , {field: 'month', title: '日期', align: 'center'}
                 , {field: 'price', title: '利润', align: 'center'}
             ]],
