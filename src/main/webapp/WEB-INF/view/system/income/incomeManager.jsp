@@ -60,7 +60,9 @@
     </div>
 
 </form>
-
+<div>
+    总收入: <label id="totalIn"></label>， 总支出: <label id="totalOut"></label>
+</div>
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div id="userToolBar" style="display: none;">
@@ -163,6 +165,11 @@
                 , {title: '操作', toolbar: '#userBar', align: 'center', width: '20%'}
             ]],
             done:function (data, curr, count) {
+                var params = $("#searchFrm").serialize();
+                $.post("${pageContext.request.contextPath}/income/incomeTotalIncome.action?" + params, function (res) {
+                    $("#totalIn").text(res.inPrice);
+                    $("#totalOut").text(res.outPrice);
+                })
                 //不是第一页时，如果当前返回的数据为0那么就返回上一页
                 if(data.data.length==0&&curr!=1){
                     tableIns.reload({
@@ -177,6 +184,10 @@
         //模糊查询
         $("#doSearch").click(function () {
             var params = $("#searchFrm").serialize();
+            $.post("${pageContext.request.contextPath}/income/incomeTotalIncome.action?" + params, function (res) {
+                $("#totalIn").text(res.inPrice);
+                $("#totalOut").text(res.outPrice);
+            })
             //alert(params);
             tableIns.reload({
                 url: "${pageContext.request.contextPath}/income/loadAllIncome.action?" + params,

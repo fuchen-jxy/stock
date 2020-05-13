@@ -392,4 +392,28 @@
     </if>
   </select>
 
+  <select id="incomeInPrice" resultType="java.math.BigDecimal">
+    SELECT
+    SUM(income.money_in) AS price
+    FROM income WHERE 1 = 1
+    <if test="start != null and start != ''">
+      AND income.created >= #{start}
+    </if>
+    <if test="end != null and end != ''">
+      AND income.created &lt;= #{end}
+    </if>
+  </select>
+
+  <select id="incomeOutPrice" resultType="java.math.BigDecimal">
+    SELECT
+    SUM(income.money_in - income.money_out) AS price
+    FROM income WHERE 1 = 1
+    <if test="start != null and start != ''">
+      AND income.created >= #{start}
+    </if>
+    <if test="end != null and end != ''">
+      AND income.created &lt;= #{end}
+    </if>
+  </select>
+
 </mapper>

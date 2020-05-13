@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: stock
@@ -53,6 +54,11 @@ public class InComeController {
             dataGridView.setData(incomeVos);
         }
         return dataGridView;
+    }
+
+    @RequestMapping("incomeTotalIncome")
+    public Map<String, Object> incomeTotalIncome(IncomeVo incomeVo) {
+        return inComeService.incomeTotalIncome(incomeVo);
     }
 
     @RequestMapping("addIncome")

@@ -6,6 +6,7 @@ import com.ies.domain.IncomeCriteria;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.ies.vo.IncomeVo;
 import com.ies.vo.statistics.IncomeReportVo;
 import com.ies.vo.statistics.StockReportVo;
 import org.apache.ibatis.annotations.Param;
@@ -111,4 +112,8 @@ public interface IncomeMapper {
     List<IncomeReportVo> incomeReport(IncomeReportVo incomeReportVo);
 
     BigDecimal incomeTotalPriceReport(IncomeReportVo incomeReportVo);
+
+    BigDecimal incomeInPrice(IncomeVo incomeVo);
+
+    BigDecimal incomeOutPrice(IncomeVo incomeVo);
 }

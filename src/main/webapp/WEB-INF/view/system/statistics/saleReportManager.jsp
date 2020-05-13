@@ -67,7 +67,9 @@
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 
-
+<script type="text/html" id="xuhao">
+    {{d.LAY_TABLE_INDEX+1}}
+</script>
 <script src="${pageContext.request.contextPath}/static/layui/layui.js"></script>
 <script type="text/javascript">
     var tableIns;
@@ -87,6 +89,7 @@
             , page: true  //是否启用分页
             , cols: [[   //列表数据
                 {type: 'checkbox', fixed: 'left'}
+                , {title: '序号',templet: '#xuhao'}
                 , {field: 'month', title: '日期', align: 'center'}
                 , {field: 'itemName', title: '商品名称', align: 'center'}
                 , {field: 'count', title: '数量', align: 'center'}

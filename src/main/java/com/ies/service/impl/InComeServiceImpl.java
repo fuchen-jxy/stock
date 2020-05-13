@@ -16,7 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: stock
@@ -88,6 +91,16 @@ public class InComeServiceImpl implements InComeService {
     public void deleteIncome(Long id) {
         checkDeleteCustomer(id);
         incomeMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Map<String, Object> incomeTotalIncome(IncomeVo incomeVo) {
+        BigDecimal inPrice = incomeMapper.incomeInPrice(incomeVo);
+        BigDecimal outPrice = incomeMapper.incomeOutPrice(incomeVo);
+        Map<String, Object> map = new HashMap<>();
+        map.put("inPrice", inPrice);
+        map.put("outPrice", outPrice);
+        return map;
     }
 
     private void checkDeleteCustomer(Long id) {
